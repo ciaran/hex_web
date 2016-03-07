@@ -179,9 +179,8 @@ defmodule HexWeb.ControllerHelpers do
   def audit(%Plug.Conn{assigns: %{user: user}}, action, params) do
     audit(user, action, params)
   end
-
-  def audit(user, action, opts) do
-    HexWeb.AuditLog.create(user, action, opts)
-    |> HexWeb.Repo.insert!
+  def audit(user, action, params) do
+    HexWeb.AuditLog.create(user, action, params)
+    |> HexWeb.Repo.insert
   end
 end
