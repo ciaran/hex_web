@@ -60,8 +60,9 @@ defmodule HexWeb.ControllerHelpers do
   # but Hex client expects `{field1: err1, ...}` we normalize to the latter.
   defp normalize_errors(errors) do
     Enum.into(errors, %{}, fn
+      {key, [val]} when is_map(val) -> {key, normalize_errors(val)}
       {key, [val]} -> {key, val}
-      {key, %{} = map} -> {key, normalize_errors(map)}
+      {key, %{} = val} -> {key, normalize_errors(val)}
     end)
   end
 

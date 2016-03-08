@@ -7,9 +7,9 @@ defmodule HexWeb.API.ReleaseControllerTest do
   alias HexWeb.RegistryBuilder
 
   setup do
-    user       = User.create(%{username: "eric", email: "eric@mail.com", password: "eric"}, true) |> HexWeb.Repo.insert!
+    user = User.create(%{username: "eric", email: "eric@mail.com", password: "eric"}, true) |> HexWeb.Repo.insert!
     pkg = Package.create(user, pkg_meta(%{name: "decimal", description: "Arbitrary precision decimal aritmetic for Elixir."})) |> HexWeb.Repo.insert!
-    {:ok, _}   = Release.create(pkg, rel_meta(%{version: "0.0.1", app: "decimal"}), "")
+    Release.create(pkg, rel_meta(%{version: "0.0.1", app: "decimal"}), "") |> HexWeb.Repo.insert!
     :ok
   end
 
@@ -237,7 +237,7 @@ defmodule HexWeb.API.ReleaseControllerTest do
     assert conn.status == 422
     body = Poison.decode!(conn.resp_body)
     assert body["message"] == "Validation error(s)"
-    assert body["errors"] == %{"requirements" => %{"decimal" => "invalid requirement: \"~> invalid\""}}
+    assert %{"requirements" => %{"decimal" => "invalid requirement: \"~> invalid\""}} = body["errors"]
   end
 
   test "create release updates registry" do
