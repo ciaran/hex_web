@@ -45,6 +45,7 @@ HexWeb.Repo.transaction(fn ->
           "links" => %{"Github" => "http://example.com/github",
                    "Documentation" => "http://example.com/documentation"},
           "description" => "Arbitrary precision decimal arithmetic for Elixir"}})
+      |> HexWeb.Repo.insert!
 
     {:ok, _} = Release.create(decimal, %{"version" => "0.0.1", "app" => "decimal", "meta" => %{"app" => "decimal", "build_tools" =>  ["mix"]}}, SampleData.checksum("decimal 0.0.1"))
     {:ok, _} = Release.create(decimal, %{"version" => "0.0.2", "app" => "decimal", "meta" => %{"app" => "decimal", "build_tools" =>  ["mix"]}}, SampleData.checksum("decimal 0.0.2"))
@@ -58,6 +59,7 @@ HexWeb.Repo.transaction(fn ->
           "licenses" => ["Apache 2.0"],
           "links" => %{"Github" => "http://example.com/github"},
           "description" => lorem}})
+      |> HexWeb.Repo.insert!
 
     {:ok, _} = Release.create(postgrex, %{"version" => "0.0.1", "app" => "postgrex", "meta" => %{"app" => "postgrex", "build_tools" => ["mix"]}}, SampleData.checksum("postgrex 0.0.1"))
     {:ok, _} = Release.create(postgrex, %{"version" => "0.0.2", "app" => "postgrex", "requirements" => %{decimal: "~> 0.0.1"}, "meta" => %{"app" => "postgrex", "build_tools" => ["mix"]}}, SampleData.checksum("postgrex 0.0.2"))
@@ -73,6 +75,7 @@ HexWeb.Repo.transaction(fn ->
           "licenses" => [],
           "links" => %{"Github" => "http://example.com/github"},
           "description" => lorem}})
+      |> HexWeb.Repo.insert!
 
     {:ok, _}   = Release.create(ecto, %{"version" => "0.0.1", "app" => "ecto", "meta" => %{"app" => "ecto", "build_tools" => ["mix"]}}, SampleData.checksum("ecto 0.0.1"))
     {:ok, _}   = Release.create(ecto, %{"version" => "0.0.2", "app" => "ecto", "requirements" => %{postgrex: "~> 0.0.1"}, "meta" => %{"app" => "ecto", "build_tools" => ["mix"]}}, SampleData.checksum("ecto 0.0.2"))
