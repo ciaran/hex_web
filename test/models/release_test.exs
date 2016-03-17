@@ -35,13 +35,14 @@ defmodule HexWeb.ReleaseTest do
 
     Release.create(decimal, rel_meta(%{version: "0.0.1", app: "decimal"}), "") |> HexWeb.Repo.insert!
     Release.create(decimal, rel_meta(%{version: "0.0.2", app: "decimal"}), "") |> HexWeb.Repo.insert!
-    Release.create(postgrex,
-                   rel_meta(%{requirements: [%{name: "decimal", requirement: "~> 0.0.1"}],
-                              app: "postgrex", version: "0.0.1"}), "") |> HexWeb.Repo.insert!
-    Release.create(ecto,
-                   rel_meta(%{requirements: [%{name: "decimal", requirement: "~> 0.0.2"},
-                                             %{name: "postgrex", requirement: "== 0.0.1"}],
-                              app: "ecto", version: "0.0.1"}), "") |> HexWeb.Repo.insert!
+
+    meta = rel_meta(%{requirements: [%{name: "decimal", requirement: "~> 0.0.1"}],
+                      app: "postgrex", version: "0.0.1"})
+    Release.create(postgrex, meta, "") |> HexWeb.Repo.insert!
+
+    meta = rel_meta(%{requirements: [%{name: "decimal", requirement: "~> 0.0.2"}, %{name: "postgrex", requirement: "== 0.0.1"}],
+                      app: "ecto", version: "0.0.1"})
+    Release.create(ecto, meta, "") |> HexWeb.Repo.insert!
 
     postgrex_id = postgrex.id
     decimal_id = decimal.id
