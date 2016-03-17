@@ -37,10 +37,9 @@ defmodule HexWeb.RegistryBuilderTest do
     Release.create(ex_doc, rel_meta(%{version: "0.0.1", app: "ex_doc"}), "") |> HexWeb.Repo.insert!
     Release.create(decimal, rel_meta(%{version: "0.0.1", app: "decimal"}), "") |> HexWeb.Repo.insert!
     Release.create(decimal, rel_meta(%{version: "0.0.2", app: "decimal", requirements: [%{name: "ex_doc", requirement: "0.0.1"}]}), "") |> HexWeb.Repo.insert!
-    Release.create(postgrex,
-      rel_meta(%{version: "0.0.2", app: "postgrex",
-                 requirements: [%{name: "decimal", requirement: "~> 0.0.1"}, %{name: "ex_doc", requirement: "0.0.1"}]}), "")
-    |> HexWeb.Repo.insert!
+    meta = rel_meta(%{requirements: [%{name: "decimal", requirement: "~> 0.0.1"}, %{name: "ex_doc", requirement: "0.0.1"}],
+                      app: "postgrex", version: "0.0.2"})
+    Release.create(postgrex, meta, "") |> HexWeb.Repo.insert!
   end
 
   test "registry is versioned" do
