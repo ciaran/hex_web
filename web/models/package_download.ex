@@ -2,11 +2,9 @@ defmodule HexWeb.PackageDownload do
   use HexWeb.Web, :model
   import HexWeb.QueryAPI, only: [coalesce: 2]
 
-  @primary_key {:view, :string, []}
-
   schema "package_downloads" do
     belongs_to :package, Package, references: :id
-    # field :view, :string
+    field :view, :string
     field :downloads, :integer
   end
 

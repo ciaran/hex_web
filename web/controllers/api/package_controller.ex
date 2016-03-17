@@ -28,8 +28,7 @@ defmodule HexWeb.API.PackageController do
     package = HexWeb.Repo.get_by!(Package, name: name)
 
     when_stale(conn, package, fn conn ->
-      # FIXME: also preload :downloads
-      package  = HexWeb.Repo.preload(package, [:releases])
+      package  = HexWeb.Repo.preload(package, [:downloads, :releases])
       package  = update_in(package.releases, &Release.sort/1)
 
       conn
