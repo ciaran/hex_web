@@ -25,7 +25,7 @@ defmodule HexWeb.Mixfile do
 
   defp deps do
     [{:phoenix,             "~> 1.1"},
-     {:phoenix_ecto,        "~> 3.0.0-beta"},
+     {:phoenix_ecto,        "~> 3.0.0-beta", path: "../phoenix_ecto"},
      {:postgrex,            ">= 0.0.0"},
      {:phoenix_html,        "~> 2.3"},
      {:cowboy,              "~> 1.0"},

@@ -42,7 +42,7 @@ defmodule HexWeb.ControllerHelpers do
   end
 
   def validation_failed(conn, %Ecto.Changeset{} = changeset) do
-    errors = Ecto.Changeset.traverse_errors(changeset, fn err -> err end)
+    errors = Ecto.Changeset.traverse_errors(changeset, fn {err, []} -> err end)
              |> normalize_errors
     render_error(conn, 422, errors: errors)
   end

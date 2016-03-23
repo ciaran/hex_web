@@ -66,10 +66,10 @@ defmodule HexWeb.ReleaseTest do
            Release.create(ecto, rel_meta(%{version: "0.1.0", app: "ecto", requirements: [%{name: "decimal", requirement: "~> 0.1"}]}), "")
            |> HexWeb.Repo.insert
 
-    assert %{version: ["is invalid"]} =
+    assert %{version: [{"is invalid", []}]} =
            Release.create(ecto, rel_meta(%{version: "0.1", app: "ecto"}), "") |> extract_errors
     
-    assert %{requirements: [%{requirement: ["invalid requirement: \"~> fail\""]}]} =
+    assert %{requirements: [%{requirement: [{"invalid requirement: \"~> fail\"", []}]}]} =
            Release.create(ecto, rel_meta(%{version: "0.1.1", app: "ecto", requirements: [%{name: "decimal", requirement: "~> fail"}]}), "") |> extract_errors
            
     # FIXME: re-enable
@@ -88,7 +88,7 @@ defmodule HexWeb.ReleaseTest do
     Release.create(ecto, rel_meta(%{version: "0.0.1", app: "ecto"}), "") |> HexWeb.Repo.insert!
     Release.create(postgrex, rel_meta(%{version: "0.0.1", app: "postgrex"}), "") |> HexWeb.Repo.insert!
 
-    assert {:error, %{errors: [version: "has already been published"]}} =
+    assert {:error, %{errors: [version: {"has already been published", []}]}} =
            Release.create(ecto, rel_meta(%{version: "0.0.1", app: "ecto"}), "")
            |> HexWeb.Repo.insert
   end

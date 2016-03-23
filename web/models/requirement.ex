@@ -31,9 +31,9 @@ defmodule HexWeb.Requirement do
       cond do
         is_nil(req) ->
           # Temporary friendly error message until people update to hex 0.9.1
-          [{key, "invalid requirement: #{inspect req}, use \">= 0.0.0\" instead"}]
+          [{key, {"invalid requirement: #{inspect req}, use \">= 0.0.0\" instead", []}}]
         not valid?(req) ->
-          [{key, "invalid requirement: #{inspect req}"}]
+          [{key, {"invalid requirement: #{inspect req}", []}}]
         true ->
           []
       end
