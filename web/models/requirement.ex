@@ -18,15 +18,15 @@ defmodule HexWeb.Requirement do
 
     name = changeset.changes.name
     app = Map.get(changeset.changes, :app, name)
-    dep = HexWeb.Repo.get_by!(Package, name: name)
+    dep = HexWeb.Repo.get_by(Package, name: name)
 
     changeset
     |> put_change(:app, app)
-    |> put_change(:dependency_id, dep.id)
-    |> validate_requirement
+    |> put_assoc(:dependency, dep)
+    |> validate_requirement(dep)
   end
 
-  defp validate_requirement(changeset) do
+  defp validate_requirement(changeset, dep) do
     validate_change(changeset, :requirement, fn key, req ->
       cond do
         is_nil(req) ->
@@ -34,6 +34,8 @@ defmodule HexWeb.Requirement do
           [{key, "invalid requirement: #{inspect req}, use \">= 0.0.0\" instead"}]
         not valid?(req) ->
           [{key, "invalid requirement: #{inspect req}"}]
+        !dep ->
+          [{key, "invalid package"}]
         true ->
           []
       end
