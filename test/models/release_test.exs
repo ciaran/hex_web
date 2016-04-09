@@ -72,9 +72,8 @@ defmodule HexWeb.ReleaseTest do
     assert %{requirements: [%{requirement: ["invalid requirement: \"~> fail\""]}]} =
            Release.create(ecto, rel_meta(%{version: "0.1.1", app: "ecto", requirements: [%{name: "decimal", requirement: "~> fail"}]}), "") |> extract_errors
            
-    # FIXME: re-enable
-    # assert %{requirements: [%{requirement: ["Conflict on decimal\n  mix.exs: ~> 1.0\n"]}]} =
-    #        Release.create(ecto, rel_meta(%{version: "0.1.1", app: "ecto", requirements: [%{name: "decimal", requirement: "~> 1.0"}]}), "") |> extract_errors
+    assert %{requirements: [%{requirement: ["Conflict on decimal\n  mix.exs: ~> 1.0\n"]}]} =
+           Release.create(ecto, rel_meta(%{version: "0.1.1", app: "ecto", requirements: [%{name: "decimal", requirement: "~> 1.0"}]}), "") |> extract_errors
   end
 
   defp extract_errors(%Ecto.Changeset{} = changeset) do
