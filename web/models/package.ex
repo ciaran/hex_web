@@ -119,6 +119,11 @@ defmodule HexWeb.Package do
     query
   end
 
+  defp search(query, {:maintainer, name}) do
+    from var in query,
+      where: fragment("?->'maintainers' \\? ?", var.meta, ^name)
+  end
+
   defp search(query, {mode, search}) do
     name_search = search |> escape_search() |> like_search(mode)
 

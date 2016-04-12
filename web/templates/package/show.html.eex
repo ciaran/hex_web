@@ -37,7 +37,11 @@ tools = Keyword.take(tools, compatible_tools)
     <div class="col-md-9">
       <%= if maintains != [] do %>
         <h3>Maintainers</h3>
-        <span class="maintainers"><%= Enum.join(maintains, ", ") %></span>
+        <ul class="maintainers clearfix">
+          <%= for name <- maintains do %>
+            <li><%= link name, to: package_path(HexWeb.Endpoint, :index, maintainer: name) %></li>
+          <% end %>
+        </ul>
       <% end %>
 
       <%= if links != [] or (@hexdocs_url != nil and @docs_tarball_url != nil ) do %>

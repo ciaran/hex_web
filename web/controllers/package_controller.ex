@@ -8,11 +8,14 @@ defmodule HexWeb.PackageController do
   def index(conn, params) do
     letter        = HexWeb.Utils.safe_search(params["letter"])
     search        = HexWeb.Utils.safe_search(params["search"])
+    maintainer    = params["maintainer"]
 
     filter =
       cond do
         letter ->
           {:starts_with, letter}
+        maintainer ->
+          {:maintainer, maintainer}
         search ->
           if String.length(search) >= 3 do
             {:contains, search}
@@ -34,6 +37,7 @@ defmodule HexWeb.PackageController do
       title:         "Packages",
       per_page:      @packages_per_page,
       search:        search,
+      maintainer:    maintainer,
       letter:        letter,
       sort:          sort,
       package_count: package_count,
